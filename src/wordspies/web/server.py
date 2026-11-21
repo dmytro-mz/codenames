@@ -15,7 +15,7 @@ from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from wordspies.game.decks import Deck, load_decks
+from wordspies.game.decks import PICTURES_DIR, Deck, load_decks
 from wordspies.web.room import REACTIONS, TIMERS, Room, RoomError
 
 log = logging.getLogger(__name__)
@@ -208,5 +208,6 @@ def create_app(
 
     if pictures is not None:
         app.mount("/pictures", RevalidatedStatic(directory=pictures), name="pictures")
+    app.mount("/deck-pictures", RevalidatedStatic(directory=PICTURES_DIR), name="deck-pictures")
     app.mount("/static", RevalidatedStatic(directory=STATIC), name="static")
     return app

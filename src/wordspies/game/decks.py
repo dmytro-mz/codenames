@@ -10,7 +10,7 @@ from pathlib import Path
 from wordspies.game.engine import PICTURES, WORDS, Layout
 
 DATA = Path(__file__).parent / "data"
-STATIC_PICTURES = Path(__file__).resolve().parents[1] / "web" / "static" / "pictures"
+PICTURES_DIR = DATA / "pictures"
 IMAGE_SUFFIXES = {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"}
 
 
@@ -65,9 +65,8 @@ def _images(folder: Path, url_prefix: str) -> tuple[str, ...]:
 def builtin_decks() -> tuple[Deck, ...]:
     en = _read_words("words_en.txt")
     pl = _read_words("words_pl.txt")
-    pics = _images(STATIC_PICTURES, "/static/pictures")
-    favourites = [f"/static/pictures/{n}.svg" for n in ("1f98a", "1f680", "1f3b8", "1f419")]
-    sample = tuple(p for p in favourites if p in pics) or pics[:4]
+    pics = _images(PICTURES_DIR, "/deck-pictures")
+    sample = pics[:4]
     return (
         Deck("en", "English words", f"{len(en)} words · 5×5", True, en, ("OCTOPUS", "ROBIN", "PITCH", "MERCURY")),
         Deck("pl", "Polskie słowa", f"{len(pl)} słów · 5×5", True, pl, ("ZAMEK", "KLUCZ", "SŁOŃCE", "PIES")),

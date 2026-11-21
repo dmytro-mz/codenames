@@ -12,7 +12,7 @@ call, or the same room). One person runs a small Python server and everyone else
 - **The rules are enforced.** A clue with number *N* allows up to *N + 1* guesses. A clue of 0 or ∞ allows any
   number. Players must guess at least once before ending the turn. A miss ends the turn, the assassin loses the
   game, and a team wins when all its agents are revealed.
-- **Three decks, chosen in the lobby:** 400 English words, 775 Polish words (both on a 5×5 grid), or 336 pictures
+- **Three decks, chosen in the lobby:** 400 English words, 775 Polish words (both on a 5×5 grid), or 280 pictures
   (5×4 grid). You can also add a folder of your own images.
 - **Made for voice chat.** The spymaster says the clue out loud and enters the number; typing the word is optional.
   Operatives click a card to point at it (everyone sees who points where) and click it again to reveal it.
@@ -115,9 +115,6 @@ The code is released under the [MIT License](LICENSE).
 - English word list: [Gullesnuffs/Codenames](https://github.com/Gullesnuffs/Codenames) (`wordlist-eng.txt`).
 - Polish word list: [sagelga/codenames](https://github.com/sagelga/codenames) (`wordlist/pl-PL/default`); underscores
   in multi-word entries are turned into spaces.
-- Picture deck: [Twemoji](https://github.com/jdecked/twemoji) graphics by Twitter, Inc. and other contributors,
-  licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Download them again with
-  `scripts/fetch_pictures.py`.
 - Fonts: Black Ops One, Oswald and Space Grotesk from Google Fonts (SIL Open Font License).
 
 Word Spies uses the classic spymaster-and-operatives rules of word-association party games, with its own name and
