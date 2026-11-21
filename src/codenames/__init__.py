@@ -1,4 +1,4 @@
-"""Word Spies — a team word-association spy game for the browser."""
+"""Codenames — a team word-association spy game for the browser."""
 
 
 def main() -> None:

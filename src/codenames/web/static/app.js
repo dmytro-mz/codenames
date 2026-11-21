@@ -106,7 +106,7 @@ function showHome() {
   S.code = null;
   S.state = null;
   S.dom = null;
-  document.title = "Word Spies";
+  document.title = "Codenames";
   const nameInput = h("input", { class: "text", value: S.name, placeholder: suggestName(), maxlength: 20, "aria-label": "Your name" });
   const codeInput = h("input", { class: "text", placeholder: "CODE", maxlength: 8, autocapitalize: "characters", "aria-label": "Table code" });
   const create = async () => {
@@ -174,7 +174,7 @@ async function enterRoom(code) {
   closeSocket();
   Object.assign(S, { code, state: null, log: [], fatal: null, me: null, connected: false, retry: 0, dom: null });
   S.ui = freshUi();
-  document.title = `Word Spies · ${code}`;
+  document.title = `Codenames · ${code}`;
   if (!S.name && !URL_TOKEN) await askName(`Join table ${code}`);
   buildShell();
   connect();
@@ -295,12 +295,12 @@ function notifyTurn(prev, next) {
   const job = myJob(next);
   if (job && job !== myJob(prev)) {
     setTimeout(() => sfx.yourTurn(), 500);
-    if (document.hidden) document.title = job === "clue" ? "🔔 Give a clue! · Word Spies" : "🔔 Your turn to guess! · Word Spies";
+    if (document.hidden) document.title = job === "clue" ? "🔔 Give a clue! · Codenames" : "🔔 Your turn to guess! · Codenames";
   }
 }
 
 document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && S.code) document.title = `Word Spies · ${S.code}`;
+  if (!document.hidden && S.code) document.title = `Codenames · ${S.code}`;
 });
 
 // ------------------------------------------------------------------ shell
@@ -667,7 +667,7 @@ function renderLobby(st, main) {
       { class: "link-box" },
       linkInput,
       h("button", { class: "btn primary", onclick: copyInvite }, "Copy link"),
-      navigator.share ? h("button", { class: "btn", onclick: () => navigator.share({ title: "Play Word Spies with me", url: inviteUrl() }).catch(() => {}) }, "Share") : null,
+      navigator.share ? h("button", { class: "btn", onclick: () => navigator.share({ title: "Play Codenames with me", url: inviteUrl() }).catch(() => {}) }, "Share") : null,
     ),
   );
   const watchers = st.members.filter((m) => !m.team && (m.connected || m.member === S.me));

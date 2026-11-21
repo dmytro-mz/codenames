@@ -1,7 +1,7 @@
 [project]
 name = "codenames"
 version = "0.1.0"
-description = "Word Spies — a team word-association spy game for the browser, played over voice chat"
+description = "Codenames — a team word-association spy game for the browser, played over voice chat"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]

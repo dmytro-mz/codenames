@@ -132,7 +132,7 @@ def create_app(
         sweeper.cancel()
         manager.close()
 
-    app = FastAPI(title="Word Spies", lifespan=lifespan, docs_url=None, redoc_url=None)
+    app = FastAPI(title="Codenames", lifespan=lifespan, docs_url=None, redoc_url=None)
     app.state.manager = manager
 
     @app.get("/api/config")

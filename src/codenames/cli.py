@@ -9,7 +9,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
-app = typer.Typer(add_completion=False, help="Word Spies — a team word-association spy game for the browser")
+app = typer.Typer(add_completion=False, help="Codenames — a team word-association spy game for the browser")
 console = Console()
 
 
@@ -109,7 +109,7 @@ def serve(
 
 @app.callback()
 def _root() -> None:
-    """Word Spies — a team word-association spy game for the browser."""
+    """Codenames — a team word-association spy game for the browser."""
 
 
 def main() -> None:

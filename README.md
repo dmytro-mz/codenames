@@ -1,4 +1,4 @@
-# Word Spies
+# Codenames
 
 A team word-association spy game for the browser, made for playing with friends over voice chat (Discord, a
 call, or the same room). One person runs a small Python server and everyone else opens a link.
@@ -118,6 +118,6 @@ The code is released under the [MIT License](LICENSE).
 - Picture deck: card images from [samdemaeyer/codenames-pictures](https://github.com/samdemaeyer/codenames-pictures/tree/main/public/images/cards).
 - Fonts: Black Ops One, Oswald and Space Grotesk from Google Fonts (SIL Open Font License).
 
-Word Spies uses the classic spymaster-and-operatives rules of word-association party games, with its own name and
+Codenames uses the classic spymaster-and-operatives rules of word-association party games, with its own
 artwork. It is an unofficial fan project for private games with friends, and is not affiliated with or endorsed by
 any publisher.
