@@ -115,6 +115,7 @@ The code is released under the [MIT License](LICENSE).
 - English word list: [Gullesnuffs/Codenames](https://github.com/Gullesnuffs/Codenames) (`wordlist-eng.txt`).
 - Polish word list: [sagelga/codenames](https://github.com/sagelga/codenames) (`wordlist/pl-PL/default`); underscores
   in multi-word entries are turned into spaces.
+- Picture deck: card images from [samdemaeyer/codenames-pictures](https://github.com/samdemaeyer/codenames-pictures/tree/main/public/images/cards).
 - Fonts: Black Ops One, Oswald and Space Grotesk from Google Fonts (SIL Open Font License).
 
 Word Spies uses the classic spymaster-and-operatives rules of word-association party games, with its own name and
