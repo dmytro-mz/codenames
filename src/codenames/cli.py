@@ -64,8 +64,8 @@ def serve(
     """Host the multiplayer web game. Share the table link; friends join from their browser."""
     import uvicorn
 
-    from wordspies.game.decks import load_decks
-    from wordspies.web.server import create_app
+    from codenames.game.decks import load_decks
+    from codenames.web.server import create_app
 
     if pictures is not None:
         pictures = pictures.expanduser().resolve()
@@ -91,7 +91,7 @@ def serve(
     console.print("[dim]  table activity is logged below (Ctrl+C to stop)\n")
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter("%(asctime)s  %(message)s", datefmt="%H:%M:%S"))
-    web_log = logging.getLogger("wordspies.web")
+    web_log = logging.getLogger("codenames.web")
     web_log.addHandler(handler)
     web_log.setLevel(logging.INFO)
     web_log.propagate = False

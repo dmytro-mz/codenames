@@ -1,7 +1,7 @@
 import pytest
 
-from wordspies.game.decks import builtin_decks, load_decks
-from wordspies.game.engine import PICTURES, WORDS, Game, IllegalMove, Kind, Phase, parse_number
+from codenames.game.decks import builtin_decks, load_decks
+from codenames.game.engine import PICTURES, WORDS, Game, IllegalMove, Kind, Phase, parse_number
 
 
 def _game(first: str = "red", seed: int = 1) -> Game:

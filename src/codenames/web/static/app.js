@@ -16,8 +16,8 @@ const URL_TOKEN = takeTokenFromUrl();
 
 const S = {
   config: { public_url: null, lan_url: null, decks: [], timers: [0], reactions: [] },
-  token: URL_TOKEN || localStorage.getItem("wordspies.token") || newToken(),
-  name: localStorage.getItem("wordspies.name") || "",
+  token: URL_TOKEN || localStorage.getItem("codenames.token") || newToken(),
+  name: localStorage.getItem("codenames.name") || "",
   code: null,
   ws: null,
   retry: 0,
@@ -31,7 +31,7 @@ const S = {
   ui: freshUi(),
   timer: { endAt: 0, total: 0, lastTick: 0 },
 };
-localStorage.setItem("wordspies.token", S.token);
+localStorage.setItem("codenames.token", S.token);
 
 function freshUi() {
   return {
@@ -69,7 +69,7 @@ function saveName(name) {
   name = (name || "").trim().slice(0, 20);
   if (!name) return S.name;
   S.name = name;
-  localStorage.setItem("wordspies.name", name);
+  localStorage.setItem("codenames.name", name);
   return name;
 }
 
@@ -654,8 +654,8 @@ function renderLobby(st, main) {
   const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
   let note = null;
   if (!S.config.public_url) {
-    if (local && !S.config.lan_url) note = "This link only works on this computer. Restart with `uv run wordspies serve --tunnel` to invite people over the internet.";
-    else if (!location.hostname.endsWith("trycloudflare.com")) note = "Works for people on the same network. For friends elsewhere, run `uv run wordspies serve --tunnel`.";
+    if (local && !S.config.lan_url) note = "This link only works on this computer. Restart with `uv run codenames serve --tunnel` to invite people over the internet.";
+    else if (!location.hostname.endsWith("trycloudflare.com")) note = "Works for people on the same network. For friends elsewhere, run `uv run codenames serve --tunnel`.";
   }
   const linkInput = h("input", { class: "text", readonly: true, value: inviteUrl(), onclick: (e) => e.target.select(), "aria-label": "Invite link" });
   const invite = h(

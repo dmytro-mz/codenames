@@ -19,9 +19,9 @@ import uvicorn
 from fastapi import FastAPI
 from playwright.async_api import async_playwright
 
-from wordspies.game.engine import Phase
-from wordspies.web.room import Room
-from wordspies.web.server import create_app
+from codenames.game.engine import Phase
+from codenames.web.room import Room
+from codenames.web.server import create_app
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 PORT = 8766

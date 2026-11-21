@@ -15,8 +15,8 @@ from pathlib import Path
 from demo import CHROME, NAMES, TOKENS, prepare, serving
 from playwright.async_api import Page, async_playwright
 
-from wordspies.game.engine import Phase
-from wordspies.web.server import create_app
+from codenames.game.engine import Phase
+from codenames.web.server import create_app
 
 SIZES = {"Ann": (1440, 900), "Bob": (390, 844), "Cleo": (1024, 700), "Dan": (1280, 720)}
 

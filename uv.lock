@@ -928,7 +928,7 @@ wheels = [
 ]
 
 [[package]]
-name = "wordspies"
+name = "codenames"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

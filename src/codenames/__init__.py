@@ -2,6 +2,6 @@
 
 
 def main() -> None:
-    from wordspies.cli import main as cli_main
+    from codenames.cli import main as cli_main
 
     cli_main()

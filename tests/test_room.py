@@ -3,8 +3,8 @@ from typing import Any
 import pytest
 from fastapi.testclient import TestClient
 
-from wordspies.web.room import Room, RoomError
-from wordspies.web.server import create_app
+from codenames.web.room import Room, RoomError
+from codenames.web.server import create_app
 
 TOKENS = [c * 32 for c in "abcdef"]
 

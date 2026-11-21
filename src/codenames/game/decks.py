@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
 
-from wordspies.game.engine import PICTURES, WORDS, Layout
+from codenames.game.engine import PICTURES, WORDS, Layout
 
 DATA = Path(__file__).parent / "data"
 PICTURES_DIR = DATA / "pictures"

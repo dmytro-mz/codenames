@@ -2,8 +2,8 @@
 
 let ctx = null;
 let out = null;
-let muted = localStorage.getItem("wordspies.muted") === "1";
-let volume = Number(localStorage.getItem("wordspies.volume") ?? 0.8);
+let muted = localStorage.getItem("codenames.muted") === "1";
+let volume = Number(localStorage.getItem("codenames.volume") ?? 0.8);
 let noiseBuffer = null;
 // The effects are written at modest per-sound gains; this lifts them to a loud level at full volume.
 const BOOST = 5;
@@ -13,12 +13,12 @@ export const getVolume = () => volume;
 
 export function setMuted(value) {
   muted = value;
-  localStorage.setItem("wordspies.muted", value ? "1" : "0");
+  localStorage.setItem("codenames.muted", value ? "1" : "0");
 }
 
 export function setVolume(value) {
   volume = Math.min(1, Math.max(0, value));
-  localStorage.setItem("wordspies.volume", String(volume));
+  localStorage.setItem("codenames.volume", String(volume));
   if (out) out.gain.setTargetAtTime(volume * BOOST, ctx.currentTime, 0.02);
 }
 

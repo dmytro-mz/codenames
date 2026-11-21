@@ -17,8 +17,8 @@ from collections import deque
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-from wordspies.game.decks import Deck, load_decks
-from wordspies.game.engine import TEAMS, Event, Game, IllegalMove, Phase, parse_number
+from codenames.game.decks import Deck, load_decks
+from codenames.game.engine import TEAMS, Event, Game, IllegalMove, Phase, parse_number
 
 log = logging.getLogger(__name__)
 

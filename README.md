@@ -36,9 +36,9 @@ call, or the same room). One person runs a small Python server and everyone else
 ## Quick start
 
 ```bash
-git clone https://github.com/dmytro-mz/wordspies.git
-cd wordspies
-uv run wordspies serve --tunnel
+git clone https://github.com/dmytro-mz/codenames.git
+cd codenames
+uv run codenames serve --tunnel
 ```
 
 Open <http://localhost:8000> and click **Create a table**. Send the invite link to your friends: it's at the top
@@ -49,12 +49,12 @@ start.
 
 | Command | Who can join |
 | --- | --- |
-| `uv run wordspies serve` | People on the same Wi-Fi/LAN, through the network link printed at startup |
-| `uv run wordspies serve --tunnel` | Anyone, through a temporary public `trycloudflare.com` link |
-| `uv run wordspies serve --public-url https://…` | Anyone, if you host the server behind your own domain or reverse proxy |
-| `uv run wordspies serve --pictures ~/my-images` | Adds a "My pictures" deck from a folder of at least 20 images |
+| `uv run codenames serve` | People on the same Wi-Fi/LAN, through the network link printed at startup |
+| `uv run codenames serve --tunnel` | Anyone, through a temporary public `trycloudflare.com` link |
+| `uv run codenames serve --public-url https://…` | Anyone, if you host the server behind your own domain or reverse proxy |
+| `uv run codenames serve --pictures ~/my-images` | Adds a "My pictures" deck from a folder of at least 20 images |
 
-Run `uv run wordspies serve --help` for all options.
+Run `uv run codenames serve --help` for all options.
 
 ## How to play
 
@@ -97,10 +97,10 @@ uv run python scripts/ui_check.py                                               
 ### Project layout
 
 ```
-src/wordspies/
+src/codenames/
   game/      rules engine (pure, no I/O) and decks; data/ holds the word lists
   web/       room logic, FastAPI + WebSocket server, and the vanilla JS client in static/ (no build step)
-  cli.py     the `wordspies` command
+  cli.py     the `codenames` command
 scripts/     screenshots, the browser playthrough, and the picture-deck downloader
 tests/       pytest suite
 ```

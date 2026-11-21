@@ -15,8 +15,8 @@ from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from wordspies.game.decks import PICTURES_DIR, Deck, load_decks
-from wordspies.web.room import REACTIONS, TIMERS, Room, RoomError
+from codenames.game.decks import PICTURES_DIR, Deck, load_decks
+from codenames.web.room import REACTIONS, TIMERS, Room, RoomError
 
 log = logging.getLogger(__name__)
 
