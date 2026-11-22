@@ -172,6 +172,7 @@ function logo(small = false) {
 // ------------------------------------------------------------------ room / socket
 async function enterRoom(code) {
   closeSocket();
+  S.config = await fetch("/api/config").then((r) => r.json());
   Object.assign(S, { code, state: null, log: [], fatal: null, me: null, connected: false, retry: 0, dom: null });
   S.ui = freshUi();
   document.title = `Codenames · ${code}`;
@@ -261,6 +262,25 @@ function showFatal(message) {
 }
 
 // ------------------------------------------------------------------ state
+function renderTestBar() {
+  document.getElementById("testbar")?.remove();
+  const st = S.state;
+  if (!S.config.test || !st) return;
+  const chips = st.members.map((m) =>
+    h(
+      "button",
+      { class: `chip tb-seat${m.member === S.me ? " on" : ""}${m.team ? ` t-${m.team}` : ""}`, title: `Play as ${m.name}`, onclick: () => m.member !== S.me && send({ type: "test_switch", member: m.member }) },
+      m.name,
+      m.team ? h("small", {}, ` ${m.team === "red" ? "R" : "B"}${m.role === "spymaster" ? "·spy" : ""}`) : null,
+      st.host === m.member ? h("small", {}, " ★") : null,
+    ),
+  );
+  const shell = document.querySelector(".shell");
+  if (!shell) return;
+  shell.classList.add("has-testbar");
+  $("#topbar").after(h("div", { class: "testbar", id: "testbar" }, h("b", {}, "🧪 Test: play as"), chips, h("button", { class: "chip", onclick: () => send({ type: "test_add" }) }, "+ player")));
+}
+
 function applyState(next) {
   const prev = S.state;
   S.state = next;
@@ -456,7 +476,7 @@ function renderTop() {
   const scored = st && st.game_no > 0;
   const before = [
     h("span", { class: "brand", title: "Home", onclick: leaveTable }, logo(true)),
-    h("button", { class: "chip invite-chip", title: "Copy the invite link", onclick: copyInvite }, h("span", { class: "ic-ico" }, "🔗"), h("span", { class: "ic-label" }, "Invite"), h("b", {}, S.code)),
+    h("button", { class: "chip invite-chip", title: "Copy the invite link", onclick: copyInvite }, h("span", { class: "ic-ico" }, "🔗"), h("span", { class: "ic-label" }, "Copy invite link"), h("b", {}, S.code)),
     st ? roleChip(st) : null,
     scored
       ? h("span", { class: "chip score", title: "Games won this session" }, h("b", { class: "tc-red" }, st.score.red), h("span", { class: "sep" }, ":"), h("b", { class: "tc-blue" }, st.score.blue))
@@ -631,6 +651,7 @@ function showRules() {
 // ------------------------------------------------------------------ rendering
 function render(opts = {}) {
   renderTop();
+  renderTestBar();
   const st = S.state;
   const main = $("#main");
   if (!st || !main) return;
@@ -651,25 +672,6 @@ function renderLobby(st, main) {
   const scroll = main.querySelector(".lobby")?.scrollTop || 0;
   const isHost = st.host === S.me;
   const hostName = member(st, st.host)?.name || "the host";
-  const local = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
-  let note = null;
-  if (!S.config.public_url) {
-    if (local && !S.config.lan_url) note = "This link only works on this computer. Restart with `uv run codenames serve --tunnel` to invite people over the internet.";
-    else if (!location.hostname.endsWith("trycloudflare.com")) note = "Works for people on the same network. For friends elsewhere, run `uv run codenames serve --tunnel`.";
-  }
-  const linkInput = h("input", { class: "text", readonly: true, value: inviteUrl(), onclick: (e) => e.target.select(), "aria-label": "Invite link" });
-  const invite = h(
-    "div",
-    { class: "invite" },
-    h("div", { class: "invite-text" }, h("h2", {}, "Invite your agents"), h("p", {}, "Anyone who opens the link joins this table. You need 4+ players: a spymaster and at least one operative per team."), note ? h("p", { class: "note" }, "ℹ️ ", note) : null),
-    h(
-      "div",
-      { class: "link-box" },
-      linkInput,
-      h("button", { class: "btn primary", onclick: copyInvite }, "Copy link"),
-      navigator.share ? h("button", { class: "btn", onclick: () => navigator.share({ title: "Play Codenames with me", url: inviteUrl() }).catch(() => {}) }, "Share") : null,
-    ),
-  );
   const watchers = st.members.filter((m) => !m.team && (m.connected || m.member === S.me));
   const watchPanel = h(
     "div",
@@ -716,7 +718,7 @@ function renderLobby(st, main) {
       : h("p", { class: "waiting" }, problems.length ? problems.join(" · ") : `Waiting for ${hostName} to start…`),
   );
   const teams = h("div", { class: "lobby-teams" }, lobbyTeam(st, "red", isHost), h("div", { class: "vs" }, "VS"), lobbyTeam(st, "blue", isHost));
-  const section = h("section", { class: "lobby" }, invite, teams, h("div", { class: "lobby-grid" }, settings, watchPanel), actions);
+  const section = h("section", { class: "lobby" }, teams, h("div", { class: "lobby-grid" }, settings, watchPanel), actions);
   main.replaceChildren(section);
   section.scrollTop = scroll;
 }

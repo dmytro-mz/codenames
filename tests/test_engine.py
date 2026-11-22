@@ -93,7 +93,7 @@ def test_rules_reject_bad_moves() -> None:
 def test_bundled_decks() -> None:
     decks = {d.key: d for d in builtin_decks()}
     assert len(decks["en"].cards) == 400
-    assert len(decks["pl"].cards) >= 700
+    assert len(decks["pl"].cards) == 400
     assert all("_" not in w for w in decks["pl"].cards)
     assert len(decks["pictures"].cards) >= 200
     assert set(load_decks()) == {"en", "pl", "pictures"}

@@ -161,3 +161,28 @@ def test_http_and_websocket_roundtrip() -> None:
             assert ws.receive_json()["type"] == "welcome"
             state = ws.receive_json()
             assert state["type"] == "state" and state["members"][0]["name"] == "Ann"
+
+
+def test_test_mode_switch_seats() -> None:
+    client = TestClient(create_app(test=True))
+    code = client.post("/api/rooms").json()["room"]
+    with client.websocket_connect(f"/ws/{code}") as ws:
+        ws.send_json({"token": TOKENS[0], "name": "Me"})
+        states = []
+        while len(states) < 1 or len(states[-1]["members"]) < 4:
+            m = ws.receive_json()
+            if m["type"] == "state":
+                states.append(m)
+        ids = [m["member"] for m in states[-1]["members"]]
+        ws.send_json({"type": "test_switch", "member": ids[1]})
+        while True:
+            m = ws.receive_json()
+            if m["type"] == "welcome":
+                assert m["you"] == ids[1]
+                break
+        ws.send_json({"type": "join_team", "team": "red", "role": "spymaster"})
+        while True:
+            m = ws.receive_json()
+            if m["type"] == "state" and m["you"]["member"] == ids[1] and m["you"]["role"] == "spymaster":
+                break
+        assert m["you"]["team"] == "red"

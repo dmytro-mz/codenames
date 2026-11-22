@@ -56,6 +56,10 @@ def serve(
     port: int = 8000,
     public_url: Annotated[str | None, typer.Option(help="Base URL used in invite links")] = None,
     tunnel: Annotated[bool, typer.Option(help="Open a public cloudflared tunnel and invite through it")] = False,
+    test: Annotated[
+        bool,
+        typer.Option("--test", help="Solo testing: fake players you can switch between to take every seat yourself"),
+    ] = False,
     pictures: Annotated[
         Path | None,
         typer.Option(help="Folder of your own images (at least 20), offered as an extra picture deck in the lobby"),
@@ -86,6 +90,8 @@ def serve(
         console.print(f"  public:  {public_url}")
     elif not lan_url:
         console.print("[dim]  bind --host 0.0.0.0 or use --tunnel to invite people from other machines")
+    if test:
+        console.print("  [yellow]test mode[/]: fake players join your table; switch seats in the bar at the bottom")
     if pictures is not None:
         console.print(f"  pictures: {pictures}")
     console.print("[dim]  table activity is logged below (Ctrl+C to stop)\n")
@@ -97,7 +103,7 @@ def serve(
     web_log.propagate = False
     try:
         uvicorn.run(
-            create_app(public_url=public_url, lan_url=lan_url, pictures=pictures),
+            create_app(public_url=public_url, lan_url=lan_url, pictures=pictures, test=test),
             host=host,
             port=port,
             log_level="warning",

@@ -121,6 +121,7 @@ def create_app(
     public_url: str | None = None,
     lan_url: str | None = None,
     pictures: Path | None = None,
+    test: bool = False,
 ) -> FastAPI:
     decks = load_decks(pictures)
     manager = RoomManager(decks)
@@ -143,6 +144,7 @@ def create_app(
             "decks": [d.public() for d in decks.values()],
             "timers": list(TIMERS),
             "reactions": list(REACTIONS),
+            "test": test,
         }
 
     @app.post("/api/rooms")
@@ -183,13 +185,27 @@ def create_app(
         conn = Connection(ws, member.id)
         pump = asyncio.create_task(conn.pump())
         room.connect(conn)
+        if test and len(room.members) == 1:
+            for _ in range(3):
+                room.add_puppet()
         try:
             while True:
                 msg = await ws.receive_json()
                 if not isinstance(msg, dict):
                     continue
                 try:
-                    reply = room.handle(member.id, msg)
+                    if test and msg.get("type") == "test_add":
+                        room.add_puppet()
+                        continue
+                    if test and msg.get("type") == "test_switch":
+                        target = room.members.get(str(msg.get("member")))
+                        if target is None:
+                            raise RoomError("No such player")
+                        conn.member_id = target.id
+                        conn.send({"type": "welcome", "you": target.id, "log": list(room.log)})
+                        conn.send(room.state_for(target.id))
+                        continue
+                    reply = room.handle(conn.member_id, msg)
                 except RoomError as e:
                     conn.send({"type": "error", "message": str(e)})
                 else:
@@ -198,6 +214,7 @@ def create_app(
         except (WebSocketDisconnect, ValueError, RuntimeError):
             pass
         finally:
+            conn.member_id = member.id
             room.disconnect(conn)
             pump.cancel()
 

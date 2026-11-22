@@ -131,6 +131,23 @@ class Room:
             self._rename(member, name)
         return member
 
+    def add_puppet(self) -> Member:
+        """Test mode: a seat that is always 'online' and is driven by whoever switches to it."""
+        if len(self.members) >= MAX_MEMBERS:
+            raise RoomError("This table is full")
+        member = Member(
+            id=secrets.token_hex(4),
+            token=secrets.token_hex(16),
+            name=f"Player {len(self.members) + 1}",
+            connections=1,
+        )
+        self.members[member.id] = member
+        self._say(f"{member.name} joined the table")
+        if self.status == "lobby":
+            member.team = self._smaller_team()
+        self._emit({"kind": "presence"})
+        return member
+
     def _smaller_team(self) -> str:
         sizes = {t: sum(1 for m in self.members.values() if m.team == t) for t in TEAMS}
         if sizes["red"] == sizes["blue"]:

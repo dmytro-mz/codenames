@@ -12,7 +12,7 @@ call, or the same room). One person runs a small Python server and everyone else
 - **The rules are enforced.** A clue with number *N* allows up to *N + 1* guesses. A clue of 0 or ∞ allows any
   number. Players must guess at least once before ending the turn. A miss ends the turn, the assassin loses the
   game, and a team wins when all its agents are revealed.
-- **Three decks, chosen in the lobby:** 400 English words, 775 Polish words (both on a 5×5 grid), or 280 pictures
+- **Three decks, chosen in the lobby:** 400 English words, 400 Polish words (both on a 5×5 grid), or 280 pictures
   (5×4 grid). You can also add a folder of your own images.
 - **Made for voice chat.** The spymaster says the clue out loud and enters the number; typing the word is optional.
   Operatives click a card to point at it (everyone sees who points where) and click it again to reveal it.
@@ -51,6 +51,7 @@ start.
 | --- | --- |
 | `uv run codenames serve` | People on the same Wi-Fi/LAN, through the network link printed at startup |
 | `uv run codenames serve --tunnel` | Anyone, through a temporary public `trycloudflare.com` link |
+| `uv run codenames serve --test` | Just you: adds fake players and a bar to switch between seats, to try every role yourself |
 | `uv run codenames serve --public-url https://…` | Anyone, if you host the server behind your own domain or reverse proxy |
 | `uv run codenames serve --pictures ~/my-images` | Adds a "My pictures" deck from a folder of at least 20 images |
 
